@@ -105,6 +105,42 @@ router.get("/getTotalEmployeeCount", async function (req, res) {
     res.status(200).send({ statusCode: 200, count: response.length });
   });
 });
+
+// getAllCounts
+
+router.get("/getAllCounts", async function (req, res) {
+  let result = {};
+  await foodHelper.getTotalWorkingHour().then((response) => {
+    result.workingHour = response.length * 8 + "Hrs";
+    result.totalEmployees = response.length;
+    // res.status(200).send({ statusCode: 200, count: response.length });
+  });
+
+  await foodHelper.getTotalBillableHour("B").then((response) => {
+    result.billingHour = response.length * 8;
+  });
+
+  await foodHelper.getTotalBillableHour("NB").then((response) => {
+    result.nonBillingHour = response.length * 8;
+  });
+  await foodHelper.getTotalAccounts().then((response) => {
+    (result.totalAccountCount = response.length),
+      (result.totalAccounts = response);
+  });
+
+  await foodHelper.getAllProjects().then((response) => {
+    (result.totalProjectsCount = response.length),
+      (result.totalProjects = response);
+  });
+
+  await foodHelper.getAllPractices().then((response) => {
+    (result.totalPracticeCount = response.length),
+      (result.totalPractice = response);
+  });
+
+  res.status(200).send({ statusCode: 200, data: result });
+});
+
 // Billable hours
 // getTotalBillableHour
 router.get("/getTotalBillableHour", async function (req, res) {
