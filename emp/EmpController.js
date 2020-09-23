@@ -111,7 +111,7 @@ router.get("/getTotalEmployeeCount", async function (req, res) {
 router.get("/getAllCounts", async function (req, res) {
   let result = {};
   await foodHelper.getTotalWorkingHour().then((response) => {
-    result.workingHour = response.length * 8 + "Hrs";
+    result.workingHour = response.length * 8;
     result.totalEmployees = response.length;
     // res.status(200).send({ statusCode: 200, count: response.length });
   });
