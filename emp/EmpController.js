@@ -164,6 +164,10 @@ router.get("/search/:id", VerifyToken, async function (req, res) {
   });
 });
 
+router.get("/check", async function (req, res) {
+  res.send("hi");
+});
+
 // DELETES A food FROM THE DATABASE
 router.delete("/deleteEmp/:id", async function (req, res) {
   await foodHelper.deletefoodByID(req.params.id).then((response) => {
