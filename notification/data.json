@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "5ed40ba6d14a361de4a56249",
+    "foodType": "Break Fast",
+    "quantity": 3,
+    "foodVerient": "bajji"
+  },
+  {
+    "_id": "5ed40ba8d14a361de4a5624a",
+    "foodType": "Break Fast",
+    "quantity": 3,
+    "foodVerient": "bajji"
+  },
+  {
+    "_id": "5ed40babd14a361de4a5624c",
+    "foodType": "Break Fast",
+    "quantity": 4,
+    "foodVerient": "bajji"
+  },
+  {
+    "_id": "5ed40bacd14a361de4a5624d",
+    "foodType": "Break Fast",
+    "quantity": 2,
+    "foodVerient": "bajji"
+  },
+  {
+    "_id": "5ed40ba9d14a361de4a5624b",
+    "foodType": "Break Fast",
+    "quantity": 4,
+    "foodVerient": "bajji"
+  }
+]
