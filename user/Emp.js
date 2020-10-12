@@ -6,6 +6,7 @@ var EmpSchema = new mongoose.Schema({
   employee_date_of_joining: String,
   employee_mail_id: String,
   personal_gender: String,
+  employee_company_name: String,
   employee_ou_name: String,
   employee_grade_name: String,
   employee_designation_name: String,

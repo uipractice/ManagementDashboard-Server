@@ -100,9 +100,17 @@ router.get("/getTotalWorkingHour", async function (req, res) {
       .send({ statusCode: 200, workingHour: response.length * 8 + "Hrs" });
   });
 });
-router.get("/getTotalEmployeeCount", async function (req, res) {
+router.get("/getTotalEmployeeCount", VerifyToken, async function (req, res) {
   await foodHelper.getTotalWorkingHour().then((response) => {
     res.status(200).send({ statusCode: 200, count: response.length });
+  });
+});
+
+router.get("/getAccountGraphData", async function (req, res) {
+  await foodHelper.getGraphData().then((response) => {
+    res
+      .status(200)
+      .send({ statusCode: 200, data: response, count: response.length });
   });
 });
 

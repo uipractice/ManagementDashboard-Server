@@ -133,6 +133,74 @@ module.exports = {
       });
     }).catch((err) => reject(err));
   },
+  // graphData
+  getGraphData: (data) => {
+    var usersProjection = {
+      __v: false,
+      createdBy: false,
+    };
+    let queryString = "employee_department_name";
+    return new Promise((resolve, reject) => {
+      let billable = [];
+      let nonBillable = [];
+      let dataToSend = [];
+      // data === "B"
+      //   ? (queryString = "Billable")
+      //   : (queryString = "Non Billable");
+      // EMP.createIndex({ master1: 1, employee_department_name: 1 });
+      EMP.aggregate(
+        [
+          { $match: { master1: "Billable" } },
+          {
+            $group: {
+              _id: "$employee_department_name",
+              billableCount: { $sum: 1 },
+            },
+          },
+        ],
+        async function (err, foods) {
+          if (err) resolve(err);
+          billable = await foods;
+          // resolve(foods);
+        }
+      );
+      EMP.aggregate(
+        [
+          { $match: { master1: "Non Billable" } },
+          {
+            $group: {
+              _id: "$employee_department_name",
+              nonBillableCount: { $sum: 1 },
+            },
+          },
+        ],
+        async function (err, foods) {
+          if (err) resolve(err);
+          // resolve(foods);
+          nonBillable = await foods;
+          // dataToSend = [...billable, ...nonBillable];
+          const mergeByProperty = async (target, source, prop) => {
+            source.forEach((sourceElement) => {
+              let targetElement = target.find((targetElement) => {
+                return sourceElement[prop] === targetElement[prop];
+              });
+              targetElement
+                ? Object.assign(targetElement, sourceElement)
+                : target.push(sourceElement);
+            });
+          };
+          // var target /* arr1 */ = [{name: "lang", value: "English"}, {name: "age", value: "18"}];
+          // var source /* arr2 */ = [{name : "childs", value: '5'}, {name: "lang", value: "German"}];
+
+          mergeByProperty(billable, nonBillable, "_id");
+
+          // console.log(target)
+          // Array.prototype.push.apply(billable, nonBillable);
+          resolve(billable);
+        }
+      );
+    }).catch((err) => reject(err));
+  },
 
   // getAllPractices
 
