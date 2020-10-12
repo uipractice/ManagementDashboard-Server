@@ -115,6 +115,15 @@ router.get("/getAccountGraphData", async function (req, res) {
   });
 });
 
+router.get("/getPracticeGraphData", async function (req, res) {
+  await foodHelper.getPracticeGraphData().then((response) => {
+    console.log("Captured DATA from backend");
+    res
+      .status(200)
+      .send({ statusCode: 200, data: response, count: response.length });
+  });
+});
+
 // getAllCounts
 
 router.get("/getAllCounts", async function (req, res) {
