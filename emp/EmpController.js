@@ -108,6 +108,7 @@ router.get("/getTotalEmployeeCount", VerifyToken, async function (req, res) {
 
 router.get("/getAccountGraphData", async function (req, res) {
   await foodHelper.getGraphData().then((response) => {
+    console.log("Captured DATA from backend");
     res
       .status(200)
       .send({ statusCode: 200, data: response, count: response.length });
