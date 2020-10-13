@@ -41,14 +41,22 @@ authRouter.post("/login", async function (req, res) {
     if (err) return res.status(500).send("Error on the server.");
     // console.log(user);
     if (!user)
-      return res
-        .status(200)
-        .send({ message: "User name or password not valid", sendCode: 500 });
+      return res.status(200).send({
+        auth: false,
+        token: null,
+        message: "Invalid Username / Password",
+        statusCode: 401,
+      });
 
     // check if the password is valid
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid)
-      return res.status(401).send({ auth: false, token: null });
+      return res.status(200).send({
+        auth: false,
+        token: null,
+        message: "Invalid Username / Password",
+        statusCode: 401,
+      });
 
     // if user is found and password is valid
     // create a token
@@ -227,13 +235,13 @@ authRouter.put("/updateregister", VerifyToken, async function (req, res) {
   });
 });
 
-authRouter.get("/me", VerifyToken, function (req, res, next) {
+authRouter.get("/authenticate", VerifyToken, function (req, res, next) {
   // console.log(req);
   User.findById(req.userId, { password: 0 }, function (err, user) {
     if (err)
       return res.status(500).send("There was a problem finding the user.");
     if (!user) return res.status(404).send("No user found.");
-    res.status(200).send(user);
+    res.status(200).send({ statusCode: 200, data: user });
   });
 });
 
