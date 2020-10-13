@@ -94,6 +94,7 @@ authRouter.post("/register", function (req, res) {
         password: hashedPassword,
         mobileNumber: req.body.mobileNumber,
         registeredDate: Date.now(),
+        designation: req.body.designation,
         deviceToken: req.body.deviceToken,
       },
       function (err, user) {
