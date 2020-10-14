@@ -126,37 +126,77 @@ router.get("/getPracticeGraphData", VerifyToken, async function (req, res) {
 
 // getAllCounts
 
-router.get("/getAllCounts", async function (req, res) {
+router.get("/getAllCounts", VerifyToken, async function (req, res) {
   let result = {};
+  let data = [];
   await foodHelper.getTotalWorkingHour().then((response) => {
     result.workingHour = response.length * 8;
     result.totalEmployees = response.length;
+    data.push({
+      title: "Total Employees",
+      count: response.length,
+      flag: 1,
+      icon: "total_employee.svg",
+    });
     // res.status(200).send({ statusCode: 200, count: response.length });
   });
 
   await foodHelper.getTotalBillableHour("B").then((response) => {
     result.billingHour = response.length * 8;
+    data.push({
+      title: "Billing Hour",
+      count: response.length * 8,
+      flag: 1,
+      icon: "Billable_hours.svg",
+    });
   });
+  // await foodHelper.getSummeryArray().then((response) => {
+  //   result.data = response;
+  // });
 
   await foodHelper.getTotalBillableHour("NB").then((response) => {
     result.nonBillingHour = response.length * 8;
+    data.push({
+      title: "Non Billing Hour",
+      count: response.length * 8,
+      flag: 1,
+      icon: "Billable_hours.svg",
+    });
   });
   await foodHelper.getTotalAccounts().then((response) => {
     (result.totalAccountCount = response.length),
       (result.totalAccounts = response);
+    data.push({
+      title: "Accounts",
+      count: response.length,
+      flag: 1,
+      icon: "Accounts.svg",
+    });
   });
 
   await foodHelper.getAllProjects().then((response) => {
     (result.totalProjectsCount = response.length),
       (result.totalProjects = response);
+    data.push({
+      title: "Projects",
+      count: response.length,
+      flag: 1,
+      icon: "Project.svg",
+    });
   });
 
   await foodHelper.getAllPractices().then((response) => {
     (result.totalPracticeCount = response.length),
       (result.totalPractice = response);
+    data.push({
+      title: "Practices",
+      count: response.length,
+      flag: 1,
+      icon: "Practices.svg",
+    });
   });
 
-  res.status(200).send({ statusCode: 200, data: result });
+  res.status(200).send({ statusCode: 200, data: { result, data } });
 });
 
 // Billable hours

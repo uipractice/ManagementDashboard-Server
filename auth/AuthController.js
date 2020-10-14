@@ -37,46 +37,64 @@ var foodData = [];
 // });
 authRouter.post("/login", async function (req, res) {
   // console.log(req.body);
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) return res.status(500).send("Error on the server.");
-    // console.log(user);
-    if (!user)
-      return res.status(200).send({
-        auth: false,
-        token: null,
-        message: "Invalid Username / Password",
-        statusCode: 401,
+  User.findOne(
+    { email: req.body.email },
+    { _id: 0 },
+
+    function (err, user) {
+      if (err) return res.status(500).send("Error on the server.");
+      // console.log(user);
+      if (!user)
+        return res.status(200).send({
+          auth: false,
+          token: null,
+          message: "Invalid Username / Password",
+          statusCode: 401,
+        });
+
+      // check if the password is valid
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+      if (!passwordIsValid)
+        return res.status(200).send({
+          auth: false,
+          token: null,
+          message: "Invalid Username / Password",
+          statusCode: 401,
+        });
+
+      // if user is found and password is valid
+      // create a token
+      var token = jwt.sign({ id: user._id }, config.secret, {
+        expiresIn: 84600, // expires in 24 hours
       });
+      // Create Refresh Token
+      const refreshToken = jwt.sign(
+        { id: user._id },
+        config.refreshTokenSecret,
+        {
+          expiresIn: 84600,
+        }
+      );
 
-    // check if the password is valid
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid)
-      return res.status(200).send({
-        auth: false,
-        token: null,
-        message: "Invalid Username / Password",
-        statusCode: 401,
+      // return the information including token as JSON
+      user.password = "";
+      user.token = "";
+      user.refreshToken = "";
+      delete user["__v"];
+      // console.log(user);
+      res.status(200).send({
+        message: "successfully logged in ",
+        auth: true,
+        statusCode: 200,
+        data: user,
+        token: token,
+        refreshToken,
       });
-
-    // if user is found and password is valid
-    // create a token
-    var token = jwt.sign({ id: user._id }, config.secret, {
-      expiresIn: 84600, // expires in 24 hours
-    });
-    // Create Refresh Token
-    const refreshToken = jwt.sign({ id: user._id }, config.refreshTokenSecret, {
-      expiresIn: 84600,
-    });
-
-    // return the information including token as JSON
-    res.status(200).send({
-      message: "successfully logged in ",
-      auth: true,
-      statusCode: 200,
-      token: token,
-      refreshToken,
-    });
-  });
+    }
+  );
 });
 
 authRouter.get("/logout", function (req, res) {

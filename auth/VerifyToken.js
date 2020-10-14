@@ -11,7 +11,7 @@ function verifyToken(req, res, next) {
   // verifies secret and checks exp
   jwt.verify(token, config.secret, function (err, decoded) {
     if (err)
-      return res.status(500).send({
+      return res.status(401).send({
         auth: false,
         message: "Failed to authenticate token.",
         statusCode: 401,

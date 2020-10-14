@@ -96,6 +96,27 @@ module.exports = {
     }).catch((err) => reject(err));
   },
 
+  // getSummeryArray
+  getSummeryArray: (data) => {
+    var usersProjection = {
+      __v: false,
+      createdBy: false,
+    };
+    let queryString;
+    return new Promise((resolve, reject) => {
+      data === "B"
+        ? (queryString = "Billable")
+        : (queryString = "Non Billable");
+      EMP.find({ master1: queryString }, usersProjection, function (
+        err,
+        foods
+      ) {
+        if (err) resolve(err);
+        resolve(foods);
+      });
+    }).catch((err) => reject(err));
+  },
+
   // Billable hours
   getTotalBillableHour: (data) => {
     var usersProjection = {
