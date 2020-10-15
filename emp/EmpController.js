@@ -136,6 +136,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       title: "Total Employees",
       count: response.length,
       flag: 1,
+      staticAvailable: false,
       icon: "total_employee.svg",
     });
     // res.status(200).send({ statusCode: 200, count: response.length });
@@ -147,6 +148,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       title: "Billing Hour",
       count: response.length * 8,
       flag: 1,
+      staticAvailable: false,
       icon: "Billable_hours.svg",
     });
   });
@@ -160,6 +162,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       title: "Non Billing Hour",
       count: response.length * 8,
       flag: 1,
+      staticAvailable: false,
       icon: "Billable_hours.svg",
     });
   });
@@ -170,6 +173,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       title: "Accounts",
       count: response.length,
       flag: 1,
+      staticAvailable: false,
       icon: "Accounts.svg",
     });
   });
@@ -181,6 +185,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       title: "Projects",
       count: response.length,
       flag: 1,
+      staticAvailable: false,
       icon: "Project.svg",
     });
   });
@@ -192,6 +197,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       title: "Practices",
       count: response.length,
       flag: 1,
+      staticAvailable: false,
       icon: "Practices.svg",
     });
   });
