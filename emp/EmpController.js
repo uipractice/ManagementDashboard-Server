@@ -165,7 +165,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
       count: response.length * 8 * 22,
       flag: 1,
       staticAvailable: false,
-      icon: "Billable_hours.svg",
+      icon: "nonbillable_hours.svg",
     });
   });
   await foodHelper.getTotalAccounts().then((response) => {
