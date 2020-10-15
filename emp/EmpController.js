@@ -160,7 +160,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
     result.nonBillingHour = response.length * 8 * 30;
     data.push({
       title: "Non Billing Hour",
-      count: response.length * 8,
+      count: response.length * 8 * 30,
       flag: 1,
       staticAvailable: false,
       icon: "Billable_hours.svg",
