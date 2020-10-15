@@ -130,7 +130,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   let result = {};
   let data = [];
   await foodHelper.getTotalWorkingHour().then((response) => {
-    result.workingHour = response.length * 8;
+    result.workingHour = 5488;
     result.totalEmployees = response.length;
     data.push({
       title: "Total Employees",
