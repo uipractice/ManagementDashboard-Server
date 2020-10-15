@@ -193,13 +193,13 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   await foodHelper.getAllPractices().then((response) => {
     (result.totalPracticeCount = response.length),
       (result.totalPractice = response);
-    data.push({
-      title: "Practices",
-      count: response.length,
-      flag: 1,
-      staticAvailable: false,
-      icon: "Practices.svg",
-    });
+    // data.push({
+    //   title: "Practices",
+    //   count: response.length,
+    //   flag: 1,
+    //   staticAvailable: false,
+    //   icon: "Practices.svg",
+    // });
   });
 
   res.status(200).send({ statusCode: 200, data: { result, data } });
