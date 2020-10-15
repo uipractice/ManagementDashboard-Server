@@ -182,6 +182,7 @@ module.exports = {
         async function (err, foods) {
           if (err) resolve(err);
           billable = await foods;
+
           EMP.aggregate(
             [
               { $match: { master1: "Non Billable" } },

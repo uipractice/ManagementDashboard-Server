@@ -130,7 +130,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   let result = {};
   let data = [];
   await foodHelper.getTotalWorkingHour().then((response) => {
-    result.workingHour = response.length * 8;
+    result.workingHour = response.length;
     result.totalEmployees = response.length;
     data.push({
       title: "Total Employees",
@@ -143,7 +143,8 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   });
 
   await foodHelper.getTotalBillableHour("B").then((response) => {
-    result.billingHour = response.length * 8;
+    result.billingHour = response.length;
+    result.billingCount = response.length;
     data.push({
       title: "Billing Hour",
       count: response.length * 8 * 22,
@@ -157,7 +158,8 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   // });
 
   await foodHelper.getTotalBillableHour("NB").then((response) => {
-    result.nonBillingHour = response.length * 8;
+    result.nonBillingHour = response.length;
+    result.nonBillingCount = response.length;
     data.push({
       title: "Non Billing Hour",
       count: response.length * 8 * 22,
