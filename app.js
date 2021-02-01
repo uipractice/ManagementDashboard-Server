@@ -17,6 +17,8 @@ var AuthController = require("./auth/AuthController");
 var demo = require("./auth/demoController");
 
 var FoodController = require("./emp/EmpController");
+var HrController = require("./hrdashboard/HrController");
+
 
 var UserController = require("./user/UserController");
 
@@ -65,6 +67,9 @@ app.use("/api/otp", otpController);
 app.use("/api/users", UserController);
 
 app.use("/api/emp", FoodController);
+
+app.use("/api/hr", HrController);
+
 app.use("/api/notification", notificationController);
 
 app.use(function (req, res, next) {

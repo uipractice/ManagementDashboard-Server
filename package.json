@@ -14,6 +14,7 @@
     "aws-sdk": "^2.691.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.16.1",
+    "convert-excel-to-json": "^1.7.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -30,9 +31,9 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "twilio": "^3.44.0",
-    "xoauth2": "^1.2.0",
     "xls-to-json-lc": "^0.3.4",
-    "xlsx-to-json-lc": "^0.5.0"
+    "xlsx-to-json-lc": "^0.5.0",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
