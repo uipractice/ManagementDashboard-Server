@@ -281,18 +281,6 @@ router.post("/upload", function (req, res) {
   });
 });
 
-router.get("/getDemographicsgraphData",function(req,res){
-  hrHelper.getDemographicsgraphData.then(response => {
-    const finalArray = [];
-    const resp = JSON.parse(response);
-console.log(resp)
-
-
-
-  })
-
-
-})
 
 
 router.get("/getOnboardedSeperatedgraphData",function(req,res){
@@ -322,6 +310,20 @@ router.get("/getEmployeeAttritiongraphData",function(req,res){
 
 
 })
+
+router.get("/getDemographicsgraphData",function(req,res){
+  hrHelper.getDemographicsgraphData.then(response => {
+    const finalArray = [];
+    const resp = JSON.parse(response);
+
+
+
+
+  })
+
+
+})
+
 
 
 router.get("/getHeaderData",  function (req, res) {

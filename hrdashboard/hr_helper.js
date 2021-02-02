@@ -41,9 +41,9 @@ module.exports = {
 
 
   getDemographicsgraphData:()=>{
+    console.log("hiii")
     return new Promise((resovle, reject) => {
-      console.log('hiii')
-      HR.find({ },
+       HR.find({ },
         {  month: 1, closingbalance: 1}, function(err, result){
           console.log(JSON.stringify(result));
   
