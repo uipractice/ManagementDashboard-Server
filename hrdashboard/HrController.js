@@ -282,15 +282,59 @@ router.post("/upload", function (req, res) {
 });
 
 
+
+router.get("/getOnboardedSeperatedgraphData",function(req,res){
+
+  hrHelper.getOnboardedSeperatedgraph.then(response => {
+    const resp = JSON.parse(response);
+
+    console.log(resp,"resp")
+
+
+  })
+
+
+
+})
+
+router.get("/getEmployeeAttritiongraphData",function(req,res){
+  console.log("hiii")
+  hrHelper.getEmployeeAttritiongraphData().then(response => {
+    const resp = JSON.parse(response)
+  }).then(resp => {
+    res.status(200).send(resp);
+
+  }).catch(error =>{
+    console.log(error);
+  })
+
+
+})
+
+router.get("/getDemographicsgraphData",function(req,res){
+  hrHelper.getDemographicsgraphData.then(response => {
+    const finalArray = [];
+    const resp = JSON.parse(response);
+
+
+
+
+  })
+
+
+})
+
+
+
 router.get("/getHeaderData",  function (req, res) {
   hrHelper.getHeaderData().then(response => {
     const finalArray = [];
     const resp = JSON.parse(response);
-    Object.keys(resp[0]).forEach(key => {
+    Object.keys(resp).forEach(key => {
       let obj = {title: '',count:'', flag:1, staticAvailable: false, icon: ''}
 
       obj.title = key;
-      obj.count = resp[0][key]
+      obj.count = resp[key]
       finalArray.push(obj);
     })
    return finalArray;
