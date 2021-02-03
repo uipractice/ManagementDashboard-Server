@@ -353,14 +353,14 @@ router.get("/getHeaderData",   async function (req, res) {
       count: response,
       flag: 1,
       staticAvailable: false,
-      icon: "Billable.svg",
+      icon: "billable.svg",
     });
   });
 
   await hrHelper.getNonBillable().then((response) => {
     
     finalArray.push({
-      title: "NOn Billable",
+      title: "Non Billable",
       count: response,
       flag: 1,
       staticAvailable: false,
