@@ -38,7 +38,6 @@ const PostOnBoardEng=require("../user/PostOnboardingEng");
 const MaleFemaleRatio=require("../user/MaleFemaleRatio")
 
 var storage = multer.diskStorage({
-  //multers disk storage settings
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
   },
@@ -283,46 +282,34 @@ router.post("/upload", function (req, res) {
 
 
 
-router.get("/getOnboardedSeperatedgraphData",function(req,res){
-
-  hrHelper.getOnboardedSeperatedgraph.then(response => {
-    const resp = JSON.parse(response);
-
-    console.log(resp,"resp")
-
-
-  })
-
-
-
-})
-
-router.get("/getEmployeeAttritiongraphData",function(req,res){
-  console.log("hiii")
-  hrHelper.getEmployeeAttritiongraphData().then(response => {
+router.get("/getOnboardedSeperatedgraphData",async function(req,res){
+  let finalArray = [];
+  await hrHelper.getOnboardedSeperatedgraphData().then(response => {
     const resp = JSON.parse(response)
-  }).then(resp => {
-    res.status(200).send(resp);
+    finalArray.push(resp)
 
-  }).catch(error =>{
-    console.log(error);
-  })
-
-
-})
-
-router.get("/getDemographicsgraphData",function(req,res){
-  hrHelper.getDemographicsgraphData.then(response => {
-    const finalArray = [];
-    const resp = JSON.parse(response);
-
-
+    
 
 
   })
+  res.status(200).send(finalArray);
 
 
-})
+
+});
+
+router.get("/getEmployeeAttritiongraphData", async function(req,res){
+  let finalArray = [];
+
+  await hrHelper.getEmployeeAttritiongraphData().then(response => {
+    const resp = JSON.parse(response)
+    finalArray.push(resp)
+  })
+
+  res.status(200).send(finalArray);
+
+
+});
 
 
 
@@ -382,6 +369,21 @@ router.get("/getHeaderData",   async function (req, res) {
   });
 
   res.status(200).send(finalArray);
+
+
+});
+
+
+router.get("/getDemographicsgraphData",  async function (req, res) {
+var finalArray=[]
+
+   await hrHelper.getDemographicsgraphData().then(response => {
+
+    const resp = JSON.parse(response)
+    finalArray.push(resp)
+  })
+  res.status(200).send(finalArray);
+
 
 
 });
