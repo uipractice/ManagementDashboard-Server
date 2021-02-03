@@ -7,19 +7,13 @@ var User = require("../user/User");
 var HR=require("../user/Hr")
 var EMP=require("../user/Emp")
 var HrAccount=require("../user/HrAccountAtrrition")
-var Foodd=require("./HR")
-let foodPerticularData = [];
-var billable
-var nonbillable
 var  sendresult=[]
 
 module.exports = {
 
   getEmployeeAttritiongraphData:()=>{
-    console.log(hhhh);
     return new Promise((resovle, reject) => {
-      HrAccount.find({}, function(err, result){
-        console.log(JSON.stringify(result,"hhhh"));
+      HrAccount.find({},{_id:0,account:1,attrition:1} ,function(err, result){
 
         if(err){
 
@@ -42,16 +36,17 @@ module.exports = {
   },
 
 
-  getDemographicsgraphData:()=>{
-    console.log("hiii")
+  
+
+  getOnboardedSeperatedgraphData:()=>{
     return new Promise((resovle, reject) => {
-       HR.find({ },
-        {  month: 1, closingbalance: 1}, function(err, result){
-          console.log(JSON.stringify(result));
+
+      HR.find({},
+        {_id:0,month: 1, Onboarded: 1, Seperated: 1}, function(err, result){
   
           if(err){
   
-              console.log("error query");
+              console.log("error query",err);
               reject(err);
   
           }else{
@@ -61,17 +56,7 @@ module.exports = {
           }
   
       })
-      
 
-
-    })
-
-  },
-
-
-  getOnboardedSeperatedgraphData:()=>{
-    console.log("hiiiii")
-    return new Promise((resovle, reject) => {
 
    
 
@@ -120,6 +105,26 @@ module.exports = {
       } )
 
     })
+  },
+
+  getDemographicsgraphData:()=>{
+    return new Promise((resovle, reject) => {
+      HR.find({ },
+        {_id:0,month: 1, closingbalance: 1}, function(err, result){
+
+          if(err){
+              reject(err);
+  
+          }else{
+  
+             resovle(JSON.stringify(result));
+  
+          }
+  
+      })
+
+    })
+
   },
 
 
