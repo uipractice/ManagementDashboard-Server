@@ -11,6 +11,7 @@ const xltoJSON = require("convert-excel-to-json");
 const fs = require('fs');
 var hrHelper=require("./hr_helper")
 
+
 const changeKeyObjects = (arr, replaceKeys) => {
   if (arr && arr.length > 0) {
     return arr.map(item => {
@@ -26,7 +27,6 @@ const changeKeyObjects = (arr, replaceKeys) => {
 
 };
 
-// router.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const HR = require("../user/Hr")
 const HRACCOUNT = require("../user/HrAccountAtrrition")
@@ -326,24 +326,62 @@ router.get("/getDemographicsgraphData",function(req,res){
 
 
 
-router.get("/getHeaderData",  function (req, res) {
-  hrHelper.getHeaderData().then(response => {
-    const finalArray = [];
+router.get("/getHeaderData",   async function (req, res) {
+
+  let result = {};
+  let finalArray = [];
+
+
+  await hrHelper.getHeaderData().then(response => {
+
+    const iconArray=['people.svg','onboarded.svg','Seperated.svg','billable.svg','non-billable.svg']
     const resp = JSON.parse(response);
+
+
     Object.keys(resp).forEach(key => {
       let obj = {title: '',count:'', flag:1, staticAvailable: false, icon: ''}
 
       obj.title = key;
-      obj.count = resp[key]
+      obj.count = resp[key];
+
       finalArray.push(obj);
     })
-   return finalArray;
-  }).then(result => {
-    res.status(200).send(result);
+    for (i in finalArray) {
+      finalArray[i].icon = iconArray[i];
+    }
 
-  }).catch(error =>{
-    console.log(error);
+    finalArray = finalArray.filter(function( obj ) {
+      return obj.title !== '_id';
+  });
+
   })
+  
+
+
+
+  await hrHelper.getBillable().then((response) => {
+    
+    finalArray.push({
+      title: "Billable",
+      count: response,
+      flag: 1,
+      staticAvailable: false,
+      icon: "Billable.svg",
+    });
+  });
+
+  await hrHelper.getNonBillable().then((response) => {
+    
+    finalArray.push({
+      title: "NOn Billable",
+      count: response,
+      flag: 1,
+      staticAvailable: false,
+      icon: "non-billable.svg",
+    });
+  });
+
+  res.status(200).send(finalArray);
 
 
 });

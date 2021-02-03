@@ -11,6 +11,8 @@ var Foodd=require("./HR")
 let foodPerticularData = [];
 var billable
 var nonbillable
+var  sendresult=[]
+
 module.exports = {
 
   getEmployeeAttritiongraphData:()=>{
@@ -78,36 +80,60 @@ module.exports = {
 
   },
 
+  getBillable:()=>{
+    return new Promise((resovle, reject) => {
+      EMP.countDocuments( {master1:"Billable"  },function(err,result){
+        if(err){
+
+          console.log("error query");
+          reject(err);
+
+      }else{
+       
+
+         resovle(result);
+
+      }
+  
+      } )
+
+    })
+
+  },
+
+  getNonBillable:()=>{
+
+    return new Promise((resovle, reject) => {
+      EMP.countDocuments( {master1:"Non Billable"  },function(err,result){
+        if(err){
+
+          console.log("error query");
+          reject(err);
+
+      }else{
+       
+
+         resovle(result);
+
+      }
+  
+      } )
+
+    })
+  },
+
 
   
  
   getHeaderData:() => {
     return new Promise((resovle, reject) => {
-      var  sendresult={}
-    EMP.countDocuments( {master1:"Billable"  },function(err,result){
-      billable=result
-
-    } )
-    EMP.countDocuments( {master1:"Non Billable"  },function(err,result){
-       nonbillable=result
-
-    } )
-
-
-    
-    
-
+  
       HR.findOne({ },
       {  HeadCount: 1, Onboarded: 1,Seperated:1}, function(err, result){
-        console.log(JSON.stringify(result));
+ 
         sendresult=JSON.stringify(result)
-        console.log(sendresult,"kk")
-        sendresult.Billable=billable
-        sendresult.NonBillable=nonbillable
+      
 
-        // sendresult.push({"Billable":billable,"Non Billable":nonbillable})
-
-        
        
 
         if(err){
