@@ -13,9 +13,6 @@ involuntary:{type: Number,default: 0},
 absconding:{type: Number,default: 0},
 closingbalance:{type: Number,default: 0},
 
-
-
-  
 },{ timestamps: true });
 HrSchemaHeadCount.plugin(uniqueValidator);
 mongoose.model("Hr", HrSchemaHeadCount);
