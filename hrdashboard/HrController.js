@@ -56,7 +56,6 @@ var storage = multer.diskStorage({
 
 var upload = multer({
   //multer settings
-
   storage: storage,
   fileFilter: function (req, file, callback) {
     //file filter
@@ -270,32 +269,19 @@ router.post("/upload", function (req, res) {
 
     res.json({result,response:{headCountresponse,accountwiseresponse,voluntaryattritionresponse,involuntaryattritionresponse,topfivereasonresponse,employementengagementactivitiesresponse,postonboardingresponse,postonboardingresponse}})
 
-
-
-
-
     } catch (e) {
       res.json({ error_code: 1, err_desc: "Corupted excel file" });
     }
   });
 });
 
-
-
 router.get("/getOnboardedSeperatedgraphData",async function(req,res){
   let finalArray = [];
   await hrHelper.getOnboardedSeperatedgraphData().then(response => {
     const resp = JSON.parse(response)
     finalArray.push(resp)
-
-    
-
-
   })
   res.status(200).send(finalArray);
-
-
-
 });
 
 router.get("/getEmployeeAttritiongraphData", async function(req,res){
@@ -308,10 +294,7 @@ router.get("/getEmployeeAttritiongraphData", async function(req,res){
 
   res.status(200).send(finalArray);
 
-
 });
-
-
 
 router.get("/getHeaderData",   async function (req, res) {
 
@@ -388,6 +371,25 @@ var finalArray=[]
 
 });
 
-
+router.get("/getTopThreeReason",  async function (req, res) {
+  var finalArray=[]
+     await hrHelper.getTopThreeReasonData().then(response => {
+  
+      const resp = JSON.parse(response)
+      finalArray= resp
+    })
+    res.status(200).send(finalArray);
+  });
+  
+  router.get("/getEmployeeAttrition",  async function (req, res) {
+    var finalArray=[]
+       await hrHelper.getEmployeeAttritionData().then(response => {
+    
+        const resp = JSON.parse(response)
+        finalArray= resp
+      })
+      res.status(200).send(finalArray);
+    });
+  
 
 module.exports = router;
