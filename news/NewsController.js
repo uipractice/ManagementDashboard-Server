@@ -46,7 +46,7 @@ router.get("/getPublishNews", VerifyToken, async function (req, res) {
 // Account wise publish news
 router.get("/getPublishNewsByDept/:id", VerifyToken, async function (req, res) {
   await newsHelper.getNewsByDept(req.params.id).then((response) => {
-    console.log('response', response)
+    // console.log('response', response)
     let publishNews = response.filter(data => {
       return data.publish == true;
     });
