@@ -11,7 +11,7 @@ var userHelper = require("../authValidation/userHelper");
 
 // CREATES A NEW notification
 
-router.post("/createNews", VerifyToken, async function (req, res) {
+router.post("/createNews", async function (req, res) {
   var newsData = {};
   newsData.date = req.body.date;
   newsData.messageType = req.body.messagetype;
@@ -28,13 +28,13 @@ router.post("/createNews", VerifyToken, async function (req, res) {
 });
 
 // RETURNS ALL THE Notification IN THE DATABASE
-router.get("/getAllNews", VerifyToken, async function (req, res) {
+router.get("/getAllNews", async function (req, res) {
   await newsHelper.getAllNews().then((response) => {
     res.status(200).send(response);
   });
 });
 //Get only publish data
-router.get("/getPublishNews", VerifyToken, async function (req, res) {
+router.get("/getPublishNews", async function (req, res) {
   await newsHelper.getAllNews().then((response) => {
     // console.log('response..', response)
     let contact = response.filter(data => {
@@ -44,7 +44,7 @@ router.get("/getPublishNews", VerifyToken, async function (req, res) {
   });
 });
 // Account wise publish news
-router.get("/getPublishNewsByDept/:id", VerifyToken, async function (req, res) {
+router.get("/getPublishNewsByDept/:id", async function (req, res) {
   await newsHelper.getNewsByDept(req.params.id).then((response) => {
     // console.log('response', response)
     let publishNews = response.filter(data => {
@@ -56,14 +56,14 @@ router.get("/getPublishNewsByDept/:id", VerifyToken, async function (req, res) {
 
 
 getAllnewsData =() =>{
-  router.get("/getAllNews", VerifyToken, async function (req, res) {
+  router.get("/getAllNews", async function (req, res) {
     await newsHelper.getAllNews().then((response) => {
       res.status(200).send(response);
     });
   });
 }
 getOnlyPublishNews =() =>{
-  router.get("/getPublishNews", VerifyToken, async function (req, res) {
+  router.get("/getPublishNews", async function (req, res) {
     await newsHelper.getAllNews().then((response) => {
       let contact = response.filter(data => {
         return data.publish == true;
@@ -76,7 +76,7 @@ getOnlyPublishNews =() =>{
 
 
 // DELETES A notification FROM THE DATABASE
-router.delete("/deletenews/:id", VerifyToken, async function (req,res){
+router.delete("/deletenews/:id", async function (req,res){
   await newsHelper.deleteNewsByID(req.params.id).then((response) => {
     if (response.statusCode === 200) {
       res.status(200).send({
@@ -90,7 +90,7 @@ router.delete("/deletenews/:id", VerifyToken, async function (req,res){
   })
 });
 // Update single  notification
-router.put("/updatNews/:id", VerifyToken, async function (req, res) {
+router.put("/updatNews/:id", async function (req, res) {
   await newsHelper.updateNotification(req.params.id, req.body).then((response) => {
     if (response.statusCode === 200) {
       res.status(200).send(response);

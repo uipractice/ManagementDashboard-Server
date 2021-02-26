@@ -12,7 +12,7 @@ var userHelper = require("../authValidation/userHelper");
 
 // CREATES A NEW notification
 
-router.post("/createnotification", VerifyToken, async function (req, res) {
+router.post("/createnotification", async function (req, res) {
   var notificationData = {};
   notificationData.date = req.body.date;
   notificationData.messageType = req.body.messagetype;
@@ -29,13 +29,13 @@ router.post("/createnotification", VerifyToken, async function (req, res) {
 });
 
 // RETURNS ALL THE Notification IN THE DATABASE
-router.get("/getAllNotification", VerifyToken, async function (req, res) {
+router.get("/getAllNotification", async function (req, res) {
   await notificationHelper.getAllNotification().then((response) => {
     res.status(200).send(response);
   });
 });
 //Get only publish data
-router.get("/getPublishNotification", VerifyToken, async function (req, res) {
+router.get("/getPublishNotification", async function (req, res) {
   await notificationHelper.getAllNotification().then((response) => {
     // console.log('response..', response)
     let contact = response.filter(data => {
@@ -47,14 +47,14 @@ router.get("/getPublishNotification", VerifyToken, async function (req, res) {
 
 
 getAllNotificationData =() =>{
-  router.get("/getAllNotification", VerifyToken, async function (req, res) {
+  router.get("/getAllNotification", async function (req, res) {
     await notificationHelper.getAllNotification().then((response) => {
       res.status(200).send(response);
     });
   });
 }
 getOnlyPublishData =() =>{
-  router.get("/getPublishNotification", VerifyToken, async function (req, res) {
+  router.get("/getPublishNotification",async function (req, res) {
     await notificationHelper.getAllNotification().then((response) => {
       let contact = response.filter(data => {
         return data.publish == true;
@@ -65,7 +65,7 @@ getOnlyPublishData =() =>{
 }
 
 // DELETES A notification FROM THE DATABASE
-router.delete("/deletenotification/:id", VerifyToken, async function (req,res){
+router.delete("/deletenotification/:id", async function (req,res){
   await notificationHelper.deleteNotificationByID(req.params.id).then((response) => {
     if (response.statusCode === 200) {
       res.status(200).send({
@@ -79,7 +79,7 @@ router.delete("/deletenotification/:id", VerifyToken, async function (req,res){
   })
 });
 // Update single  notification
-router.put("/updatNotification/:id", VerifyToken, async function (req, res) {
+router.put("/updatNotification/:id", async function (req, res) {
   await notificationHelper.updateNotification(req.params.id, req.body).then((response) => {
     if (response.statusCode === 200) {
       res.status(200).send(response);
