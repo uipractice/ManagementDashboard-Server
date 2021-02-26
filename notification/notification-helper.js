@@ -10,7 +10,7 @@ var Notification = require("./Notification");
 let foodPerticularData = [];
 module.exports = {
   createNotification: (data) => {
-    // console.log(data);
+    console.log(data);
     // data.createdBy = user;
     return new Promise((resolve, reject) => {
       Notification.create(
@@ -29,71 +29,58 @@ module.exports = {
       //   resolve(data);
     }).catch((err) => console.error(err));
   },
-  getAllfoods: () => {
+  getAllNotification: () => {
     var usersProjection = {
-      __v: false,
-      createdBy: false,
-    };
+      date: 1,
+      messageType: 1,
+      messageDescription: 1,
+      publish: 1,
+      isActive: 1,
+    }
     return new Promise((resolve, reject) => {
-      Food.find(
+      Notification.find(
         {},
         usersProjection,
-        // "_id",
-        // "foodName",
-        // "foodType",
-        // "price",
-        // "aboutDish",
-        // "quantity",
-        // "rating",
-        // "description",
-        // "imgUrl",
-        // "foodVerient",
-        // "availability",
+       
         function (err, foods) {
-          if (err) resolve(err);
+          if (err)  reject(err);
           resolve(foods);
         }
       );
     }).catch((err) => reject(err));
   },
-  getAllYourfoods: (userId) => {
-    foodPerticularData = [];
-    console.log(userId);
-    return new Promise((resolve, reject) => {
-      //   console.log(food.find({}).project({ _id: 1 }).toArray());
+  // getAllYourfoods: (userId) => {
+  //   foodPerticularData = [];
+  //   console.log(userId);
+  //   return new Promise((resolve, reject) => {
+  //     Notification.find({}, function (err, foods) {
+  //       if (err) resolve(err);
+  //       foods.map((val) => {
+  //         if (String(val.createdBy._id) === String(userId))
+  //           foodPerticularData.push(val);
+  //       });
+  //       resolve({
+  //         message: "success",
+  //         statusCode: 200,
+  //         result: foodPerticularData,
+  //       });
+  //     });
+  //   }).catch((err) => reject(err));
+  // },
 
-      Food.find({}, function (err, foods) {
-        if (err) resolve(err);
-        foods.map((val) => {
-          //   console.log(val.createdBy._id, userId);
-          if (String(val.createdBy._id) === String(userId))
-            foodPerticularData.push(val);
-          // console.log(String(val.createdBy._id) === String(userId));
-        });
-        // console.log(foodPerticularData);
-        resolve({
-          message: "success",
-          statusCode: 200,
-          result: foodPerticularData,
-        });
-      });
-    }).catch((err) => reject(err));
-  },
+  // getNotificationById: (notificationId) => {
+  //   return new Promise((resolve, reject) => {
+  //     Notification.findById(notificationId, function (err, food) {
+  //       if (err) resolve(err);
+  //       if (!food) resolve({ message: "not found", statusCode: 404 });
+  //       resolve(food);
+  //     });
+  //   }).catch((err) => reject(err));
+  // },
 
-  getfoodById: (foodId) => {
-    // console.log(env.username);
+  deleteNotificationByID: (foodId) => {
     return new Promise((resolve, reject) => {
-      Food.findById(foodId, function (err, food) {
-        if (err) resolve(err);
-        if (!food) resolve({ message: "not found", statusCode: 404 });
-        resolve(food);
-      });
-    }).catch((err) => reject(err));
-  },
-
-  deletefoodByID: (foodId) => {
-    return new Promise((resolve, reject) => {
-      Food.findByIdAndRemove(foodId, function (err, food) {
+      Notification.findByIdAndRemove(foodId, function (err, food) {
         console.log("food is", food);
         if (err) resolve(err);
         if (food === null) {
@@ -104,9 +91,9 @@ module.exports = {
       }).catch((err) => reject(err));
     });
   },
-  updatefood: (id, data) => {
+  updateNotification: (id, data) => {
     return new Promise((resolve, reject) => {
-      Food.findByIdAndUpdate(id, data, { new: true }, function (err, food) {
+      Notification.findByIdAndUpdate(id, data, { new: true }, function (err, food) {
         if (err) resolve(err);
         resolve({ message: "success", statusCode: 200, result: food });
       });

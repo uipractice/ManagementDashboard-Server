@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var NotificationSchema = new mongoose.Schema({
+var NewsSchema = new mongoose.Schema({
   // NotitificationData: Object,
   date: {type: String,default: ''},
   messageType: {type: String,default: ''},
@@ -14,6 +14,6 @@ var NotificationSchema = new mongoose.Schema({
 //   { role: "text", skillset: "text" },
 //   { weights: { role: 1, skillset: 2 } }
 // );
-mongoose.model("Notifications", NotificationSchema);
+mongoose.model("News", NewsSchema);
 
-module.exports = mongoose.model("Notifications");
+module.exports = mongoose.model("News");

@@ -142,21 +142,18 @@ router.post("/upload", function (req, res) {
       //   }]
       });
 
-       const PostOnnBordingEngagementReplaceKeys={
+      const PostOnnBordingEngagementReplaceKeys={
         Months:"month",
-        'Employee Count':"employeecount",
-        'Employee Connected' :"employeeconnected",
-        'Whats going good' :"whatsgoinggood",
-        'Scope of Improvement':"scopeofimprovement",
-        'Employee Count' :"employeecount",
-        'Employee Connected' :"employeeconnected",
-        'Whats going good':"whatsgoinggood",
-        'Scope of Improvement' :"scopeofimprovement"
+        '30_Employee Count':"employeecount30days",
+        '30_Employee Connected' :"employeeconnected30days",
+        '30_Whats going good' :"whatsgoinggood30days",
+        '30_Scope of Improvement':"scopeofimprovement30days",
+        '90_Employee Count' :"employeecount90days",
+        '90_Employee Connected' :"employeeconnected90days",
+        '90_Whats going good':"whatsgoinggood90days",
+        '90_Scope of Improvement' :"scopeofimprovement90days"
 
-
-
-
-       }
+      }
 
 
       const MaleFemaleRatioReplaceKeys={
@@ -176,8 +173,6 @@ router.post("/upload", function (req, res) {
 
 
       }
-
-
       const TopfiveReasonReplacekeys ={
         'Primary Reason' :"primaryreason",
         'Secondary Reason' :"secondaryreason",
@@ -201,22 +196,25 @@ router.post("/upload", function (req, res) {
 
       const VoluntaryAttritionAnalysisReplaceKeys = {
         Months: "months",
-        'Better Compensation': "bettercompensation",
-        'Technology exposure': "technologyexposure",
-        'Better Role': "betterrole",
-        'Onsite Oppurtunity': "onsiteoppurtunity",
-        Entrepreneurship: "entrepreneurship",
-        'Better Company': "bettercompany",
-        'job Dissatisafaction': "jobdissatisafaction",
-        'Team issues': "teamissues",
-        'Manager Issues': "managerissues",
-        'Job security': "jobsecurity",
-        Timings: "timings",
-        'Family care': "familycare",
-        relocation: "relocation",
-        'Health Issues': "healthissues",
-        'Higher Education': "highereducation",
-        'Career Break': "careerbreak"
+        'BCG_Better Compensation': "bettercompensation",
+        'BCG_Technology exposure': "technologyexposure",
+        'BCG_Better Role': "betterrole",
+        'BCG_Onsite Oppurtunity': "onsiteoppurtunity",
+        'BCG_Entrepreneurship': "entrepreneurship",
+        'BCG_Better Company': "bettercompany",
+        'BCG_Total': "totalbcg",
+        'WE_job Dissatisafaction ': "jobdissatisafaction",
+        'WE_Team issues': "teamissues",
+        'WE_Manager Issues': "managerissues",
+        'WE_Job security': "jobsecurity",
+        'WE_Timings': "timings",
+        'WE_Total': "totalwe",
+        'PR_Family care': "familycare",
+        'PR_Relocation': "relocation",
+        'PR_Health Issues ': "healthissues",
+        'PR_Higher Education': "highereducation",
+        'PR_Career Break': "careerbreak",
+        'PR_Total': "totalpr",
 
       };
 
@@ -243,11 +241,10 @@ router.post("/upload", function (req, res) {
       const voluntaryattritionArray = changeKeyObjects(result['Voluntary Attrition Anlaysis'], VoluntaryAttritionAnalysisReplaceKeys);
       const involuntaryattritionArray = changeKeyObjects(result['Involuntary Attrition'], InvoluntaaryAttritionReplaceKeys);
       const TopfiveReasonArray = changeKeyObjects(result['Top 5 Reason'], TopfiveReasonReplacekeys);
-      const PostOnnBordingEngagementArray = changeKeyObjects(result['Top 5 Reason'], PostOnnBordingEngagementReplaceKeys);
+      const PostOnnBordingEngagementArray = changeKeyObjects(result['Post on-bording engagement'], PostOnnBordingEngagementReplaceKeys);
       const MaleFemaleRatioArray = changeKeyObjects(result['Top 5 Reason'], MaleFemaleRatioReplaceKeys);
       const EmployeeEngagementActivitiesArray = changeKeyObjects(result['Employee engagement Activities'], EmployeeEngagementActivitiesReplaceKeys);
       let headCountresponse, accountwiseresponse, voluntaryattritionresponse,postonboardingresponse,malefemaleratioresponse, involuntaryattritionresponse  ,topfivereasonresponse , employementengagementactivitiesresponse= {}
-
 
       if (headcountArray.length > 0)
         headCountresponse = await HR.insertMany(headcountArray)
@@ -267,7 +264,7 @@ router.post("/upload", function (req, res) {
       employementengagementactivitiesresponse = await EmployeeEngagementActivities.insertMany(EmployeeEngagementActivitiesArray)
 
 
-    res.json({result,response:{headCountresponse,accountwiseresponse,voluntaryattritionresponse,involuntaryattritionresponse,topfivereasonresponse,employementengagementactivitiesresponse,postonboardingresponse,postonboardingresponse}})
+    res.json({result,response:{headCountresponse,accountwiseresponse,voluntaryattritionresponse,involuntaryattritionresponse,topfivereasonresponse,employementengagementactivitiesresponse,postonboardingresponse}})
 
     } catch (e) {
       res.json({ error_code: 1, err_desc: "Corupted excel file" });
@@ -301,7 +298,6 @@ router.get("/getHeaderData",   async function (req, res) {
   let result = {};
   let finalArray = [];
 
-
   await hrHelper.getHeaderData().then(response => {
 
     const iconArray=['people.svg','onboarded.svg','Seperated.svg','billable.svg','non-billable.svg']
@@ -325,9 +321,6 @@ router.get("/getHeaderData",   async function (req, res) {
   });
 
   })
-  
-
-
 
   await hrHelper.getBillable().then((response) => {
     
@@ -341,7 +334,6 @@ router.get("/getHeaderData",   async function (req, res) {
   });
 
   await hrHelper.getNonBillable().then((response) => {
-    
     finalArray.push({
       title: "Non Billable",
       count: response,
@@ -350,12 +342,8 @@ router.get("/getHeaderData",   async function (req, res) {
       icon: "non-billable.svg",
     });
   });
-
   res.status(200).send(finalArray);
-
-
 });
-
 
 router.get("/getDemographicsgraphData",  async function (req, res) {
 var finalArray=[]
@@ -381,15 +369,86 @@ router.get("/getTopThreeReason",  async function (req, res) {
     res.status(200).send(finalArray);
   });
   
-  router.get("/getEmployeeAttrition",  async function (req, res) {
+router.get("/getEmployeeAttrition",  async function (req, res) {
     var finalArray=[]
        await hrHelper.getEmployeeAttritionData().then(response => {
-    
         const resp = JSON.parse(response)
         finalArray= resp
       })
       res.status(200).send(finalArray);
     });
+router.get("/getEmployeeEngagement",  async function (req, res) {
+      var finalArray=[]
+         await hrHelper.getEmployeeEngagementData().then(response => {
+          const resp = JSON.parse(response)
+          finalArray= resp
+        })
+        res.status(200).send(finalArray);
+      });
+router.get("/getPostEngagement",  async function (req, res) {
+        var finalArray=[]
+           await hrHelper.get30DaysPostEngagementData().then(response => {
+            const resp = JSON.parse(response)
+            // finalArray= resp
+            finalArray.push({
+              title: "30Days",
+              data: resp
+            })
+          })
+          await hrHelper.get90DaysPostEngagementData().then((response) => {
+            const resp = JSON.parse(response)
+              finalArray.push({
+                title: "90Days",
+                data: resp
+              })
+          });
+          res.status(200).send(finalArray);
+        });
+router.get("/getVoluntaryAttritionData",  async function (req, res) {
+  transFormData = (subData) => {
+    let result = []
+    subData.map((item) => {
+      let allKeys = Object.keys(item);
+      let allValues = Object.values(item);
+      allKeys.forEach((item, index) => {
+        let obj = {};
+        obj['name'] = item;
+        obj['value'] = allValues[index];
+        result.push(obj);
+      })
+    });
+    return result;
+  }
+          var finalArray=[]
+             await hrHelper.getBetterCareerGrowthData().then(response => {
+              const resp = JSON.parse(response)
+              const lastItem = [resp[resp.length - 1]]
+              finalArray.push({
+                resion: "Better Career Growth",
+                totalcount: lastItem[0].totalbcg,
+                subdata: transFormData(lastItem)
+              })
+            })
+            await hrHelper.getWorkEnviornmentData().then(response => {
+              const resp = JSON.parse(response)
+              const lastItem = [resp[resp.length - 1]]
+              finalArray.push({
+                resion: "Work Enviornment",
+                totalcount: lastItem[0].totalwe,
+                subdata: transFormData(lastItem)
+              })
+            })
+            await hrHelper.getPersonalReasonsData().then(response => {
+              const resp = JSON.parse(response)
+              const lastItem = [resp[resp.length - 1]]
+              finalArray.push({
+                resion: "Personal Reasons",
+                totalcount: lastItem[0].totalpr,
+                subdata: transFormData(lastItem)
+              })
+            })
+            res.status(200).send(finalArray);
+          });
   
 
 module.exports = router;
