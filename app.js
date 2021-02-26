@@ -24,6 +24,7 @@ var UserController = require("./user/UserController");
 
 var otpController = require("./auth/otpController");
 var notificationController = require("./notification/NotificationController");
+var newsController = require("./news/NewsController");
 app.use(cors());
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
@@ -71,6 +72,8 @@ app.use("/api/emp", FoodController);
 app.use("/api/hr", HrController);
 
 app.use("/api/notification", notificationController);
+
+app.use("/api/news", newsController);
 
 app.use(function (req, res, next) {
   next(createError(404));
