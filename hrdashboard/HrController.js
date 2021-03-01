@@ -389,17 +389,18 @@ router.get("/getPostEngagement",  async function (req, res) {
         var finalArray=[]
            await hrHelper.get30DaysPostEngagementData().then(response => {
             const resp = JSON.parse(response)
-            // finalArray= resp
+            const lastItem = [resp[resp.length - 1]]
             finalArray.push({
               title: "30Days",
-              data: resp
+              data: lastItem
             })
           })
           await hrHelper.get90DaysPostEngagementData().then((response) => {
             const resp = JSON.parse(response)
+            const lastItem = [resp[resp.length - 1]]
               finalArray.push({
                 title: "90Days",
-                data: resp
+                data: lastItem
               })
           });
           res.status(200).send(finalArray);
