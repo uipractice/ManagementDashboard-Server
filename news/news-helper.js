@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var News = require("./News");
+var Notification = require("../notification/Notification")
 let foodPerticularData = [];
 
 module.exports = {
@@ -41,6 +42,27 @@ module.exports = {
         );
       }).catch((err) => reject(err));
     },
+
+    getAllNotification: () => {
+      var usersProjection = {
+        date: 1,
+        messageType: 1,
+        messageDescription: 1,
+        publish: 1,
+        isActive: 1,
+      }
+      return new Promise((resolve, reject) => {
+        Notification.find(
+          {},
+          usersProjection,
+         
+          function (err, foods) {
+            if (err)  reject(err);
+            resolve(foods);
+          }
+        );
+      }).catch((err) => reject(err));
+    },
   
     getNewsByDept: (deptId) => {
       return new Promise((resolve, reject) => {
@@ -67,7 +89,7 @@ module.exports = {
     },
     updateNews: (id, data) => {
       return new Promise((resolve, reject) => {
-        News.findByIdAndUpdate(id, data, { new: true }, function (err, food) {
+        News.updateOne(id, data, {new: true},function (err, food) {
           if (err) resolve(err);
           resolve({ message: "success", statusCode: 200, result: food });
         });
