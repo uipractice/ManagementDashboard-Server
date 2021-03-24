@@ -89,7 +89,7 @@ module.exports = {
     },
     updateNews: (id, data) => {
       return new Promise((resolve, reject) => {
-        News.updateOne(id, data, {new: true},function (err, food) {
+        News.findByIdAndUpdate(id, data, {new: true},function (err, food) {
           if (err) resolve(err);
           resolve({ message: "success", statusCode: 200, result: food });
         });
