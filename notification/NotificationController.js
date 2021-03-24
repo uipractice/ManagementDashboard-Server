@@ -72,7 +72,7 @@ router.delete("/deletenotification/:id", async function (req,res){
         message: "food: " + response.result + " was deleted.",
         statusCode: 200,
       });
-      this.getOnlyPublishData();
+      this.getAllNotificationData();
     } else {
       res.status(200).send(response);
     }
@@ -83,7 +83,7 @@ router.put("/updatNotification/:id", async function (req, res) {
   await notificationHelper.updateNotification(req.params.id, req.body).then((response) => {
     if (response.statusCode === 200) {
       res.status(200).send(response);
-      this.getOnlyPublishData();
+      this.getAllNotificationData();
     } else {
       res.status(500).send(response);
     }

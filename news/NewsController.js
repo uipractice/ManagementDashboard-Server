@@ -95,7 +95,7 @@ router.delete("/deletenews/:id", async function (req,res){
         message: "food: " + response.result + " was deleted.",
         statusCode: 200,
       });
-      this.getOnlyPublishNews();
+      this.getAllnewsData();
     } else {
       res.status(200).send(response);
     }

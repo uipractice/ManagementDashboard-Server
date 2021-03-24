@@ -101,7 +101,6 @@ module.exports = {
   },
 
   searchSkills: (text) => {
-    console.log(text);
     // var queryCond = {};
     // if (query.role) {
     //   queryCond.name = { $regex: text, $options: "i" };
