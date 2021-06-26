@@ -13,11 +13,11 @@ var userHelper = require("../authValidation/userHelper");
 router.post("/createNews", async function (req, res) {
   var newsData = {};
   newsData.date = req.body.date;
-  newsData.messageType = req.body.messagetype;
-  newsData.messageDescription = req.body.messagedescription;
+  newsData.messageType = req.body.messageType;
+  newsData.messageDescription = req.body.messageDescription;
   newsData.publish = req.body.publish;
-  newsData.isActive = req.body.isactive;
-  newsData.deptId = req.body.deptid;
+  newsData.isActive = req.body.isActive;
+  newsData.deptId = req.body.deptId;
   newsData.timeStamp = Date.now();
 
   newsHelper.createNews(newsData).then((response) => {

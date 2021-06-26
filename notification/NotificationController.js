@@ -15,11 +15,11 @@ var userHelper = require("../authValidation/userHelper");
 router.post("/createnotification", async function (req, res) {
   var notificationData = {};
   notificationData.date = req.body.date;
-  notificationData.messageType = req.body.messagetype;
-  notificationData.messageDescription = req.body.messagedescription;
+  notificationData.messageType = req.body.messageType;
+  notificationData.messageDescription = req.body.messageDescription;
   notificationData.publish = req.body.publish;
-  notificationData.isActive = req.body.isactive;
-  notificationData.deptId = req.body.deptid;
+  notificationData.isActive = req.body.isActive;
+  notificationData.deptId = req.body.deptId;
   // notificationData.NotitificationData = req.body;
   notificationData.timeStamp = Date.now();
   notificationHelper.createNotification(notificationData).then((response) => {
