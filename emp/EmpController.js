@@ -93,6 +93,19 @@ router.get("/getAllEmployees", async function (req, res) {
   });
 });
 
+router.get("/getDeptWiseProject/:id", async function (req, res) {
+  console.log(req.params.id)
+  await foodHelper.getDepartmentWiseProjectList(req.params.id).then((response) => {
+    res.status(200).send(response);
+  });
+});
+router.get("/getProjWiseEmployees/:id", async function (req, res) {
+  console.log(req.params.id)
+  await foodHelper.getProjectWiseEmployeeList(req.params.id).then((response) => {
+    res.status(200).send(response);
+  });
+});
+
 router.get("/getTotalWorkingHour", async function (req, res) {
   await foodHelper.getTotalWorkingHour().then((response) => {
     res
