@@ -105,6 +105,12 @@ router.get("/getProjWiseEmployees/:id", async function (req, res) {
     res.status(200).send(response);
   });
 });
+router.get("/getAccountWiseEmployees/:id", async function (req, res) {
+  console.log(req.params.id)
+  await foodHelper.getAccountWiseEmployeeList(req.params.id).then((response) => {
+    res.status(200).send(response);
+  });
+});
 
 router.get("/getTotalWorkingHour", async function (req, res) {
   await foodHelper.getTotalWorkingHour().then((response) => {
