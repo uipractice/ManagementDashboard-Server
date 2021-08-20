@@ -9,16 +9,15 @@ router.use(bodyParser.json());
 var newsHelper = require("./news-helper");
 var userHelper = require("../authValidation/userHelper");
 
-// CREATES A NEW notification
-
+// CREATES A NEW 
 router.post("/createNews", async function (req, res) {
   var newsData = {};
   newsData.date = req.body.date;
-  newsData.messageType = req.body.messagetype;
-  newsData.messageDescription = req.body.messagedescription;
+  newsData.messageType = req.body.messageType;
+  newsData.messageDescription = req.body.messageDescription;
   newsData.publish = req.body.publish;
-  newsData.isActive = req.body.isactive;
-  newsData.deptId = req.body.deptid;
+  newsData.isActive = req.body.isActive;
+  newsData.deptId = req.body.deptId;
   newsData.timeStamp = Date.now();
 
   newsHelper.createNews(newsData).then((response) => {
@@ -27,6 +26,19 @@ router.post("/createNews", async function (req, res) {
   });
 });
 
+// Get total News and Notification data
+router.get("/getAllData", async function (req, res) {
+  let finalArray = [];
+  await newsHelper.getAllNews().then((response) => {
+    finalArray.push(response)
+    // res.status(200).send(response);
+  });
+  await newsHelper.getAllNotification().then((response) => {
+    finalArray.push(response)
+    // res.status(200).send(response);
+  });
+  res.status(200).send(finalArray);
+});
 // RETURNS ALL THE Notification IN THE DATABASE
 router.get("/getAllNews", async function (req, res) {
   await newsHelper.getAllNews().then((response) => {
@@ -83,7 +95,7 @@ router.delete("/deletenews/:id", async function (req,res){
         message: "food: " + response.result + " was deleted.",
         statusCode: 200,
       });
-      this.getOnlyPublishNews();
+      this.getAllnewsData();
     } else {
       res.status(200).send(response);
     }
@@ -91,10 +103,10 @@ router.delete("/deletenews/:id", async function (req,res){
 });
 // Update single  notification
 router.put("/updatNews/:id", async function (req, res) {
-  await newsHelper.updateNotification(req.params.id, req.body).then((response) => {
+  await newsHelper.updateNews(req.params.id, req.body).then((response) => {
     if (response.statusCode === 200) {
       res.status(200).send(response);
-      this.getOnlyPublishNews();
+      this.getAllnewsData()
     } else {
       res.status(500).send(response);
     }

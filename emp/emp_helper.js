@@ -52,7 +52,49 @@ module.exports = {
       );
     }).catch((err) => reject(err));
   },
-
+  getDepartmentWiseProjectList: (deptName) => {
+    const usersProjection = {
+      __v: false,
+      createdBy: false,
+    };
+        
+   const query = {employee_department_name : deptName};
+   return new Promise((resolve, reject) => {
+      // data === "B"
+      //   ? (queryString = "Billable")
+      //   : (queryString = "Non Billable");
+      EMP.distinct("employee_ou_name", {employee_department_name: { $eq: deptName}},function (err, foods) {
+        if (err) resolve(err);
+        resolve(foods);
+      });
+    }).catch((err) => reject(err));
+  },
+  getProjectWiseEmployeeList: (projName) => {
+    var usersProjection = {
+      __v: false,
+      createdBy: false,
+    };
+    
+    return new Promise((resolve, reject) => {
+      EMP.find({employee_ou_name: { $eq: projName}}, usersProjection, function (err, foods) {
+        if (err) resolve(err);
+        resolve(foods);
+      });
+    }).catch((err) => reject(err));
+  },
+  getAccountWiseEmployeeList: (accountName) => {
+    var usersProjection = {
+      __v: false,
+      createdBy: false,
+    };
+    
+    return new Promise((resolve, reject) => {
+      EMP.find({employee_department_name: { $eq: accountName}}, usersProjection, function (err, foods) {
+        if (err) resolve(err);
+        resolve(foods);
+      });
+    }).catch((err) => reject(err));
+  },
   getTotalWorkingHour: () => {
     var usersProjection = {
       __v: false,
@@ -65,7 +107,7 @@ module.exports = {
       });
     }).catch((err) => reject(err));
   },
-
+ 
   getTotalEmployeeCount: () => {
     var usersProjection = {
       __v: false,
