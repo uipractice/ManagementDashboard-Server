@@ -29,11 +29,13 @@ var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
 app.use(cors());
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Accept,Accept-Language,Content-Language,Content-Type");
+  res.header("Access-Control-Allow-Headers", "Content-Length,Content-Range");
+  next();
+});
 
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
