@@ -40,10 +40,12 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "https://management-dashboard.evokeapps.com/");
 
   // Request methods you wish to allow
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
+  
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Accept,Accept-Language,Content-Language,Content-Type"
