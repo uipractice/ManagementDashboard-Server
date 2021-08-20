@@ -6,6 +6,8 @@ var httpContext = require("express-http-context");
 var cors = require("cors");
 var app = express();
 var db = require("./db");
+const https = require('https');
+const path
 global.__root = __dirname + "/";
 // app.use(express.json());
 // app.use(cookieParser());
@@ -26,6 +28,12 @@ var otpController = require("./auth/otpController");
 var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
 app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
 //   res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
