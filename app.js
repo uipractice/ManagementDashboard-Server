@@ -38,7 +38,7 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(cors({
-  origin: ['http://localhost:4200'],
+  origin: ['https://localhost:4200'],
   "methods": "GET,PUT,POST",
   "preflightContinue": false,
   "optionsSuccessStatus": 204,
