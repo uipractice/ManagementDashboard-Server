@@ -29,6 +29,14 @@ var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
 // app.use(cors());
 
+app.use(cors({
+  origin: ['http://localhost:4200'],
+  "methods": "GET,PUT,POST",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204,
+  credentials: true
+}));
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -37,13 +45,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
-app.use(cors({
-  origin: ['https://localhost:4200'],
-  "methods": "GET,PUT,POST",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204,
-  credentials: true
-}));
+
 
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
