@@ -27,7 +27,7 @@ var UserController = require("./user/UserController");
 var otpController = require("./auth/otpController");
 var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
-app.use(cors());
+// app.use(cors());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -37,6 +37,13 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
+app.use(cors({
+  origin: ['http://localhost:4200'],
+  "methods": "GET,PUT,POST",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204,
+  credentials: true
+}));
 
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
