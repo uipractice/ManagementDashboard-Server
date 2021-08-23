@@ -29,12 +29,12 @@ var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
 app.use(cors());
 
-app.use(cors({
-  "methods": "GET,PUT,POST",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204,
-  credentials: true
-}));
+// app.use(cors({
+//   "methods": "GET,PUT,POST",
+//   "preflightContinue": false,
+//   "optionsSuccessStatus": 204,
+//   credentials: true
+// }));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
