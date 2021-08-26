@@ -3,7 +3,7 @@ const https = require('https');
 const path = require('path');
 const fs = require('fs');
 
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 443;
 
 var options ={
   key: fs.readFileSync(path.join(__dirname,'cert','key.pem')),
