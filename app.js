@@ -6,6 +6,9 @@ var httpContext = require("express-http-context");
 var cors = require("cors");
 var app = express();
 var db = require("./db");
+const https = require('https');
+const path = require('path');
+const fs = require('fs');
 // global.__root = __dirname + "/";
 
 // app.use(express.json());
@@ -14,6 +17,7 @@ var db = require("./db");
 // app.use(httpContext.middleware);
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
+
 var AuthController = require("./auth/AuthController");
 var demo = require("./auth/demoController");
 
@@ -36,7 +40,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
-
 
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
