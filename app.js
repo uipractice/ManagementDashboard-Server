@@ -6,9 +6,8 @@ var httpContext = require("express-http-context");
 var cors = require("cors");
 var app = express();
 var db = require("./db");
-const https = require('https');
-const path =
-global.__root = __dirname + "/";
+// global.__root = __dirname + "/";
+
 // app.use(express.json());
 // app.use(cookieParser());
 
@@ -28,13 +27,6 @@ var otpController = require("./auth/otpController");
 var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
 app.use(cors());
-
-app.use(cors({
-  "methods": "GET,PUT,POST",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204,
-  credentials: true
-}));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -98,6 +90,7 @@ app.use("/api/news", newsController);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function (err, req, res, next) {
