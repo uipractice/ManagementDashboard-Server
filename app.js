@@ -6,10 +6,8 @@ var httpContext = require("express-http-context");
 var cors = require("cors");
 var app = express();
 var db = require("./db");
-const https = require('https');
-const path = require('path');
-const fs = require('fs');
-// global.__root = __dirname + "/";
+const path =
+global.__root = __dirname + "/";
 
 // app.use(express.json());
 // app.use(cookieParser());
@@ -32,14 +30,14 @@ var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
 app.use(cors());
 
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.header("Access-Control-Allow-Headers", "Accept,Accept-Language,Content-Language,Content-Type");
-//   res.header("Access-Control-Allow-Headers", "Content-Length,Content-Range");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Accept,Accept-Language,Content-Language,Content-Type");
+  res.header("Access-Control-Allow-Headers", "Content-Length,Content-Range");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
