@@ -6,7 +6,7 @@ var httpContext = require("express-http-context");
 var cors = require("cors");
 var app = express();
 var db = require("./db");
-const path =
+const path = require('path');
 global.__root = __dirname + "/";
 
 // app.use(express.json());
