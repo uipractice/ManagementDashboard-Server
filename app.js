@@ -28,6 +28,8 @@ var UserController = require("./user/UserController");
 var otpController = require("./auth/otpController");
 var notificationController = require("./notification/NotificationController");
 var newsController = require("./news/NewsController");
+
+var emailController = require("./email/emailController");
 app.use(cors());
 
 app.use(function(req, res, next) {
@@ -90,6 +92,8 @@ app.use("/api/hr", HrController);
 app.use("/api/notification", notificationController);
 
 app.use("/api/news", newsController);
+
+app.use("/api/email", emailController);
 
 app.use(function (req, res, next) {
   next(createError(404));
