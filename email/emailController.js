@@ -13,12 +13,7 @@ const nodemailer = require("nodemailer");
 router.post("/sendmail", (req, res) => {
   console.log(req.body.feedback_msg);
   let feedback = req.body.feedback_msg;
-  //res.send('mail sentt');
-  /* sendMail(feedback, info => {
-    console.log(`sending mail.. `);
-    //console.log(info);
-    res.send(info);
-  }); */
+  
 
   /* try {
     sendMail(feedback, info => {
