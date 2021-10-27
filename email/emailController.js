@@ -33,12 +33,12 @@ router.post("/sendmail", (req, res) => {
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_SECURE,
+     host: "mail.smtp2go.com",
+    port: 465,
+    secure: false,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
+      user: 'evokepoc@evoketechnologies.com',
+      pass: 'cjF1NHdsaXhodDAw'
     },
     tls: {
       rejectUnauthorized: false,
