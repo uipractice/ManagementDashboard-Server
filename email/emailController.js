@@ -28,12 +28,12 @@ router.post("/sendmail", (req, res) => {
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-     host: "mail.smtp2go.com",
-    port: 465,
+     host: "smtp.gmail.com",
+    port: 587,
     secure: false,
     auth: {
-      user: 'evokepoc@evoketechnologies.com',
-      pass: 'cjF1NHdsaXhodDAw'
+      user: 'straygod126@gmail.com',
+      pass: 'saikiran1'
     },
     tls: {
       rejectUnauthorized: false,
@@ -42,8 +42,8 @@ router.post("/sendmail", (req, res) => {
 
 
   let mailOptions = {
-    from: '"Evoke IT Team" <evkappspoc@evoketechnologies.com>', // sender address
-    to: 'evoke_ui@evoketechnologies.com', // list of receivers
+    from: '"feedback test" <straygod126@gmail.com>', // sender address
+    to: 'saikiran150596@gmail.com', // list of receivers
     subject: "User Feedback Dashboard management", // Subject line
     html: `
             <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -143,7 +143,7 @@ router.post("/sendmail", (req, res) => {
            })
       }
       console.log(info); 
-      console.log('Message sent: %s', info.messageId);   
+      //console.log('Message sent: %s', info.messageId);   
       //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
       //res.send('Email has been sent');
