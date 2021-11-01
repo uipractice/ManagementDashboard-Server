@@ -29,7 +29,7 @@ router.post("/sendmail", (req, res) => {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
      host: "smtp.gmail.com",
-    port: 587,
+    // port: 587,
     secure: false,
     auth: {
       user: 'straygod126@gmail.com',
