@@ -42,7 +42,7 @@ router.post("/sendmail", (req, res) => {
 
 
   let mailOptions = {
-    from: '"feedback test" <straygod126@gmail.com>', // sender address
+    from: 'straygod126@gmail.com', // sender address
     to: 'saikiran150596@gmail.com', // list of receivers
     subject: "User Feedback Dashboard management", // Subject line
     html: `
