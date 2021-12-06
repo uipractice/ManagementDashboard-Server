@@ -57,13 +57,13 @@ module.exports = {
       __v: false,
       createdBy: false,
     };
-        
-   const query = {employee_department_name : deptName};
-   return new Promise((resolve, reject) => {
+
+    const query = { employee_department_name: deptName };
+    return new Promise((resolve, reject) => {
       // data === "B"
       //   ? (queryString = "Billable")
       //   : (queryString = "Non Billable");
-      EMP.distinct("employee_ou_name", {employee_department_name: { $eq: deptName}},function (err, foods) {
+      EMP.distinct("employee_ou_name", { employee_department_name: { $eq: deptName } }, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
@@ -74,9 +74,9 @@ module.exports = {
       __v: false,
       createdBy: false,
     };
-    
+
     return new Promise((resolve, reject) => {
-      EMP.find({employee_ou_name: { $eq: projName}}, usersProjection, function (err, foods) {
+      EMP.find({ employee_ou_name: { $eq: projName } }, usersProjection, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
@@ -87,9 +87,9 @@ module.exports = {
       __v: false,
       createdBy: false,
     };
-    
+
     return new Promise((resolve, reject) => {
-      EMP.find({employee_department_name: { $eq: accountName}}, usersProjection, function (err, foods) {
+      EMP.find({ employee_department_name: { $eq: accountName } }, usersProjection, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
@@ -101,13 +101,13 @@ module.exports = {
       createdBy: false,
     };
     return new Promise((resolve, reject) => {
-      EMP.find({}, usersProjection, function (err, foods) {
+      EMP.find({}, usersProjection).count({}, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
     }).catch((err) => reject(err));
   },
- 
+
   getTotalEmployeeCount: () => {
     var usersProjection = {
       __v: false,
@@ -131,7 +131,7 @@ module.exports = {
       // data === "B"
       //   ? (queryString = "Billable")
       //   : (queryString = "Non Billable");
-      EMP.distinct("employee_ou_name", function (err, foods) {
+      EMP.distinct("employee_ou_name").count({}, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
@@ -170,7 +170,7 @@ module.exports = {
       data === "B"
         ? (queryString = "Billable")
         : (queryString = "Non Billable");
-      EMP.find({ master1: queryString }, usersProjection, function (
+      EMP.find({ master1: queryString }, usersProjection).count({}, function (
         err,
         foods
       ) {
@@ -190,7 +190,7 @@ module.exports = {
       // data === "B"
       //   ? (queryString = "Billable")
       //   : (queryString = "Non Billable");
-      EMP.distinct("employee_department_name", function (err, foods) {
+      EMP.distinct("employee_department_name").count({}, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
@@ -346,7 +346,7 @@ module.exports = {
       // data === "B"
       //   ? (queryString = "Billable")
       //   : (queryString = "Non Billable");
-      EMP.distinct("master3", function (err, foods) {
+      EMP.distinct("master3").count({}, function (err, foods) {
         if (err) resolve(err);
         resolve(foods);
       });
@@ -466,5 +466,5 @@ module.exports = {
       );
     }).catch((err) => reject(err));
   },
-  getProfileMatchBattery: (data) => {},
+  getProfileMatchBattery: (data) => { },
 };

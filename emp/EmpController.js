@@ -149,11 +149,11 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   let result = {};
   let data = [];
   await foodHelper.getTotalWorkingHour().then((response) => {
-    result.workingHour = 5488;
-    result.totalEmployees = response.length;
+    result.workingHour = response*8;
+    result.totalEmployees = response;
     data.push({
       title: "Total Employees",
-      count: response.length,
+      count: response,
       flag: 1,
       staticAvailable: false,
       icon: "total_employee.svg",
@@ -162,37 +162,40 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   });
 
   await foodHelper.getTotalBillableHour("B").then((response) => {
-    result.billingHour = response.length * 8;
-    result.billingCount = response.length;
+    result.billingHour = response * 8;
+    result.billingCount = response;
     data.push({
       title: "Billing Hour",
-      count: response.length * 8 * 22,
+      count: response * 8 * 22,
       flag: 1,
       staticAvailable: false,
       icon: "Billable_hours.svg",
     });
   });
-  // await foodHelper.getSummeryArray().then((response) => {
-  //   result.data = response;
-  // });
-
+ 
   await foodHelper.getTotalBillableHour("NB").then((response) => {
-    result.nonBillingHour = response.length * 8;
-    result.nonBillingCount = response.length;
+    result.nonBillingHour = response * 8;
+    result.nonBillingCount = response;
     data.push({
       title: "Non Billing Hour",
-      count: response.length * 8 * 22,
+      count: response * 8 * 22,
       flag: 1,
       staticAvailable: false,
       icon: "nonbillable_hours.svg",
     });
   });
+  res.status(200).send({ statusCode: 200, data: { result, data } });
+});
+
+router.get("/getAllCountsNew", VerifyToken, async function (req, res) {
+  let result = {};
+  let data = [];
   await foodHelper.getTotalAccounts().then((response) => {
-    (result.totalAccountCount = response.length),
+    (result.totalAccountCount = response),
       (result.totalAccounts = response);
     data.push({
       title: "Accounts",
-      count: response.length,
+      count: response,
       flag: 1,
       staticAvailable: false,
       icon: "Accounts.svg",
@@ -200,11 +203,11 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   });
 
   await foodHelper.getAllProjects().then((response) => {
-    (result.totalProjectsCount = response.length),
+    (result.totalProjectsCount = response),
       (result.totalProjects = response);
     data.push({
       title: "Projects",
-      count: response.length,
+      count: response,
       flag: 1,
       staticAvailable: false,
       icon: "Project.svg",
@@ -212,7 +215,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
   });
 
   await foodHelper.getAllPractices().then((response) => {
-    (result.totalPracticeCount = response.length),
+    (result.totalPracticeCount = response),
       (result.totalPractice = response);
     // data.push({
     //   title: "Practices",
@@ -225,6 +228,7 @@ router.get("/getAllCounts", VerifyToken, async function (req, res) {
 
   res.status(200).send({ statusCode: 200, data: { result, data } });
 });
+
 
 // Billable hours
 // getTotalBillableHour
