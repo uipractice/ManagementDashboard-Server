@@ -127,14 +127,11 @@ module.exports = {
       createdBy: false,
     };
     let queryString = "employee_ou_name";
-    return new Promise((resolve, reject) => {
-      // data === "B"
-      //   ? (queryString = "Billable")
-      //   : (queryString = "Non Billable");
-      EMP.distinct("employee_ou_name").count({}, function (err, foods) {
-        if (err) resolve(err);
-        resolve(foods);
-      });
+    return new Promise(async (resolve, reject) => {
+      let total = await EMP.distinct("employee_ou_name");
+      if (total) {
+        resolve(total.length);
+      }
     }).catch((err) => reject(err));
   },
 
@@ -186,14 +183,11 @@ module.exports = {
       createdBy: false,
     };
     let queryString = "employee_department_name";
-    return new Promise((resolve, reject) => {
-      // data === "B"
-      //   ? (queryString = "Billable")
-      //   : (queryString = "Non Billable");
-      EMP.distinct("employee_department_name").count({}, function (err, foods) {
-        if (err) resolve(err);
-        resolve(foods);
-      });
+    return new Promise(async (resolve, reject) => {
+      let total = await EMP.distinct("employee_department_name");
+      if (total) {
+        resolve(total.length)
+      }
     }).catch((err) => reject(err));
   },
   // graphData
