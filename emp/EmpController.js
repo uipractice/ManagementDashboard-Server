@@ -9,7 +9,7 @@ var xlstojson = require("xls-to-json-lc");
 var xlsxtojson = require("xlsx-to-json-lc");
 // router.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-var food = require("./EMP");
+var empHeaders = require("./EMP");
 var foodHelper = require("./emp_helper");
 var userHelper = require("../authValidation/userHelper");
 var EMP = require("../user/Emp");
@@ -42,10 +42,10 @@ var upload = multer({
         file.originalname.split(".")[file.originalname.split(".").length - 1]
       ) === -1
     ) {
-      console.log("multer called");
+      console.log("multer called1111");
       return callback(new Error("Wrong extension type"));
     } else {
-      console.log("multer called");
+      console.log("multer called2222");
     }
     callback(null, true);
   },
@@ -70,7 +70,7 @@ router.post("/emp", async function (req, res) {
   //   console.log(user);
   //   if (user.statusCode === 200) {
   foodHelper.createfood(req.body).then((response) => {
-    console.log(response);
+    console.log('request',response);
     res.status(200).send(response);
   });
   // } else {
@@ -270,13 +270,6 @@ router.get("/getAllPractices", async function (req, res) {
   });
 });
 
-// GETS A SINGLE food FROM THE DATABASE
-// router.get("/getfood/:id", VerifyToken, async function (req, res) {
-//   await foodHelper.getfoodById(req.params.id).then((response) => {
-//     res.status(200).send(response);
-//   });
-// });
-
 // SEARCH
 
 router.get("/search/:id", VerifyToken, async function (req, res) {
@@ -338,15 +331,19 @@ router.post("/getProfileMatchPercentage", VerifyToken, async function (
 router.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
+
+// Checking excel header name is exit or not
+hasSameProps = ( obj1, obj2 )=>{
+  return Object.keys( obj1 ).every(( prop ) =>{
+    return obj2.hasOwnProperty( prop );
+  });
+}
 /** API path that will upload the files */
 router.post("/upload", function (req, res) {
   // res.send("FIle called");
-
   var exceltojson;
-
   upload(req, res, function (err) {
     console.log("called multer");
-    // console.log(res, req, err);
     if (err) {
       res.json({ error_code: 1, err_desc: err });
       return;
@@ -382,26 +379,27 @@ router.post("/upload", function (req, res) {
             return res.json({ error_code: 1, err_desc: err, data: null });
           }
 
-          // console.log(req.body);
-
           try {
-            result.map((val) => {
-              // console.log(val);
-              EMP.create(val, function (err, emp) {
-                if (err)
-                  return res.status(500).send({
-                    message: "you are allready added",
-                    statusCode: "500",
+            const checkHeaders = hasSameProps(result[0],empHeaders)
+              if (checkHeaders) {
+                result.map((val) => {
+                  EMP.create(val, function (err, emp) {
+                    if (err)
+                      return res.status(500).send({
+                        message: "you are allready added",
+                        statusCode: "500",
+                      });
+    
+                    // return the information including token as JSON
                   });
-
-                // return the information including token as JSON
-              });
-            });
+                });
+              } else {
+                const notMatchedHeaderItem = Object.keys(result[0]).filter((allNameObject) => !Object.keys(empHeaders).includes(allNameObject));
+                res.json({ error_code: 1, err_desc: `These are the excel headers items ${notMatchedHeaderItem.toString()} are not matched in DB ` });
+              }
           } catch (e) {
             console.log(e);
-            // res.send(e);
           }
-          // console.log(result);
           res.json({ error_code: 0, err_desc: null, data: result });
         }
       );

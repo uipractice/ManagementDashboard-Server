@@ -1,32 +1,18 @@
-var mongoose = require("mongoose");
-var empSchema = new mongoose.Schema({
-  EV_empID: String,
-  EV_firstName: String,
-  EV_lastName: String,
-  EV_DOB: String,
-  EV_gender: String,
-  EV_phoneNo: String,
-  EV_address: String,
-  EV_state: String,
-  EV_city: String,
-  EV_DOJ: String,
-  EV_email: String,
-  EV_OUName: String,
-  EV_Grade: String,
-  EV_status: String,
-  EV_designation: String,
-  EV_master3: String,
-  EV_reportingTo: String,
-  EV_deptName: String,
-  EV_OUCompany: String,
-  EV_reportingToSec: String,
-  EV_timeStamp: Date,
-});
-// db.deals.ensureIndex({ name: "text", description: "text", category: "text" });
-// empSchema.index(
-//   { role: "text", skillset: "text" },
-//   { weights: { role: 1, skillset: 2 } }
-// );
-mongoose.model("EMP_DETAILS", empSchema);
+var empHeaders = {
+  master1: String,
+  employee_employee_id: String,
+  employee_date_of_joining: String,
+  employee_mail_id: String,
+  personal_gender: String,
+  employee_company_name: String,
+  employee_ou_name: String,
+  employee_grade_name: String,
+  employee_designation_name: String,
+  master3: String,
+  employee_functional_reporting_to: String,
+  employee_department_name: String,
+  ou_company: String,
+  employee_reporting_to: String,
+};
 
-module.exports = mongoose.model("EMP_DETAILS");
+module.exports = empHeaders;
