@@ -357,17 +357,12 @@ module.exports = {
     foodPerticularData = [];
     console.log(userId);
     return new Promise((resolve, reject) => {
-      //   console.log(food.find({}).project({ _id: 1 }).toArray());
-
       Food.find({}, function (err, foods) {
         if (err) resolve(err);
         foods.map((val) => {
-          //   console.log(val.createdBy._id, userId);
           if (String(val.createdBy._id) === String(userId))
             foodPerticularData.push(val);
-          // console.log(String(val.createdBy._id) === String(userId));
         });
-        // console.log(foodPerticularData);
         resolve({
           message: "success",
           statusCode: 200,
@@ -378,7 +373,6 @@ module.exports = {
   },
 
   getfoodById: (foodId) => {
-    // console.log(env.username);
     return new Promise((resolve, reject) => {
       Food.findById(foodId, function (err, food) {
         if (err) resolve(err);
@@ -411,7 +405,6 @@ module.exports = {
   },
 
   searchSkills: (text) => {
-    console.log(text);
     // var queryCond = {};
     // if (query.role) {
     //   queryCond.name = { $regex: text, $options: "i" };
