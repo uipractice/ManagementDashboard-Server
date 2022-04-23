@@ -69,7 +69,7 @@ app.use(function(req, res, next) {
 // });
 
 app.get("/api", function (req, res) {
-  res.status(200).send("API works.");
+  res.status(200).send("API worksing fine now.");
 });
 app.get("/", function (req, res) {
   res.status(200).send("<h1>Node js is working</h1>");
